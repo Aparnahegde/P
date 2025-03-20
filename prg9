@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 3005
+      MYSQL_DATABASE: student
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: Agh@2002
+    ports:
+      - "3306:3306"  # Keeping the default MySQL port
+    networks:
+      - default
+
+  app:
+    image: lab9/labapp:latest
+    tty: "true"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/student
+      SPRING_DATASOURCE_DRIVERCLASSNAME: com.mysql.cj.jdbc.Driver
+      SPRING_DATASOURCE_USERNAME: appuser 
+      SPRING_DATASOURCE_PASSWORD: Agh@2002
+    depends_on:
+      - db
+    networks:
+      - default
+
+networks:
+  default:
